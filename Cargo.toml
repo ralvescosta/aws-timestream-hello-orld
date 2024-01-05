@@ -1,0 +1,13 @@
+[package]
+name = "timestream-hello-world"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+env_logger = { version = "0.10.1" }
+log = { version = "0.4.20" }
+aws-config = { version = "1.1.1", features = ["behavior-version-latest"] }
+aws-sdk-timestreamwrite = { version = "1.9.0" }
+aws-sdk-timestreamquery = { version = "1.9.0" }
+async-trait = { version = "0.1.77" }
+tokio = { version = "1.35.1",  features = ["full"] }
