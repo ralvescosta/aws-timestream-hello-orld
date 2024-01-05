@@ -11,6 +11,7 @@ pub struct Reader<'r> {
 impl<'r> Reader<'r> {
     pub async fn new(aws_sdk_configs: &SdkConfig, app_configs: &'r AppConfigs) -> Result<Self, ()> {
         debug!("creating read client...");
+
         // You MUST call `with_endpoint_discovery_enabled` to produce a working client for this service.
         match aws_sdk_timestreamquery::Client::new(&aws_sdk_configs)
             .with_endpoint_discovery_enabled()
@@ -24,8 +25,9 @@ impl<'r> Reader<'r> {
                     app_configs,
                 })
             }
-            Err(_err) => {
-                //
+            Err(err) => {
+                error!("something went wrong to create the write client");
+                error!("{:?}", err);
                 Err(())
             }
         }
@@ -53,7 +55,8 @@ impl<'r> Reader<'r> {
                 Ok(p)
             }
             Err(err) => {
-                error!("error to prepare query - {:?}", err);
+                error!("error to prepare query");
+                error!("{:?}", err);
 
                 Err(())
             }
@@ -66,12 +69,17 @@ impl<'r> Reader<'r> {
             .send()
             .await
         {
-            Ok(_r) => {
-                //
+            Ok(out) => {
+                for row in out.rows() {
+                    debug!("{:?}", row);
+                }
+
                 Ok(())
             }
-            Err(_err) => {
-                //
+            Err(err) => {
+                error!("failure to read messages");
+                error!("{:?}", err);
+
                 Err(())
             }
         }

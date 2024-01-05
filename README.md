@@ -42,4 +42,4 @@ Contributions to enhance "timestream-hello-world" are welcome. Please feel free 
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE.md).
+This project is licensed under the [MIT License](https://github.com/ralvescosta/aws-timestream-hello-world/blob/main/LICENSE).

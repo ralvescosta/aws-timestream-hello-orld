@@ -29,10 +29,9 @@ impl<'w> Writable<'w> {
                 })
             }
             Err(err) => {
-                error!(
-                    "something went wrong to create the write client - {:?}",
-                    err
-                );
+                error!("something went wrong to create the write client",);
+                error!("{:?}", err);
+
                 Err(())
             }
         }
@@ -59,12 +58,11 @@ impl<'w> Writable<'w> {
             .send()
             .await
         {
-            Ok(_s) => {
-                debug!("messages wrote successfully!");
-                Ok(())
-            }
+            Ok(_s) => Ok(()),
             Err(err) => {
-                error!("failure to write messages - {:?}", err);
+                error!("failure to write messages");
+                error!("{:?}", err);
+
                 Err(())
             }
         }
